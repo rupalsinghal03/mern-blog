@@ -19,7 +19,6 @@ export default function Header() {
         cursor: 'pointer',
     };
     return (
-        <div>
             <nav className="navbar navbar-expand-lg navbar-light border-bottom p-4 flex g-2">
                 <div className="container">
                     <div className="logo">
@@ -54,6 +53,5 @@ export default function Header() {
                 </div>
 
             </nav>
-        </div>
     )
 }
