@@ -49,7 +49,7 @@ export default function SignUp() {
 
 
   return (
-    <div className='container'>
+    <div className='container' style={{height:"100vh"}}>
       <div className="row align-items-center justify-content-center m-5 mt-sm-5 mb-5 mt-5 md-flex-row">
         <div className="col-md-6">
           <div className="fw-bold fs-3">
@@ -81,7 +81,7 @@ export default function SignUp() {
             </button>
           </form>
           <div className="signin mt-2">
-            <span>Have an account? <Link to="#">Sign in</Link></span>
+            <span className='fw-bold'>Have an account? <Link to="#">Sign in</Link></span>
           </div>
           {errorMessage && (
             <div className="error_field bg-red p-2 mt-4 text-danger border border-danger rounded ">
