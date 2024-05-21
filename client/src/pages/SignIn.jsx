@@ -1,7 +1,86 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 export default function SignIn() {
+  const logoStyle = {
+    background: 'linear-gradient(to right, rgb(108 96 211), rgb(219 73 173))',
+    border: 'none',
+    color: 'white',
+    padding: '10px 20px',
+    borderRadius: '10px',
+    cursor: 'pointer',
+  };
+
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({})
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      setErrorMessage('Please fill all the details!')
+    }
+    try {
+      setLoading(true)
+      const res = await axios.post('/api/auth/signin', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await res.data;
+      if (data.success === false) {
+        return setErrorMessage(data.message)
+      }
+      setLoading(false)
+      navigate('/')
+    } catch (error) {
+      setErrorMessage(error.message)
+      // Handle error
+      console.error(error);
+      setLoading(false)
+    }
+  }
+
+
   return (
-    <div>SignIn</div>
+    <div className='container' style={{ height: "100vh" }}>
+      <div className="row align-items-center justify-content-center m-5 mt-sm-5 mb-5 mt-5 md-flex-row">
+        <div className="col-md-6">
+          <div className="fw-bold fs-3">
+            <span className='text-white p-2 fs-2' style={logoStyle}>Rupal's</span>
+            Blog
+          </div>
+          <p className='pt-4'>This is a demo project. You can sign up with your email and password or with Google.</p>
+        </div>
+        <div className="col-md-6">
+          <form >
+            <div className="mb-3">
+              <label className="form-label">Your Email</label>
+              <input type="email" className="form-control" placeholder='name@company.com' id='email' onChange={handleChange} />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Your Password</label>
+              <input type="password" className="form-control" placeholder='********' id='password' onChange={handleChange} />
+            </div>
+            <button type="submit" className="btn btn-primary w-100 mb-2" style={logoStyle} onClick={handleSubmit} disabled={loading}>
+              {loading ? (
+                <>
+                  <div>Loading...</div>
+                </>
+              ) : 'Sign In'}
+            </button>
+          </form>
+          <div className="signin mt-2">
+            <span className='fw-bold'>Don't have an account? <Link to="/sign-up">Sign up</Link></span>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

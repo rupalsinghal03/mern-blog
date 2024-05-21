@@ -81,7 +81,7 @@ export default function SignUp() {
             </button>
           </form>
           <div className="signin mt-2">
-            <span className='fw-bold'>Have an account? <Link to="#">Sign in</Link></span>
+            <span className='fw-bold'>Have an account? <Link to="/sign-in">Sign in</Link></span>
           </div>
           {errorMessage && (
             <div className="error_field bg-red p-2 mt-4 text-danger border border-danger rounded ">
